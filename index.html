@@ -333,6 +333,7 @@
     ro.observe(document.documentElement);
     if (document.body) ro.observe(document.body);
   }
+  addEventListener('message', function(e){ if (e.data === 'plantifyEmbedPing'){ last = 0; post(); } });
   document.addEventListener('toggle', function(){ setTimeout(post, 280); }, true);
   addEventListener('load', function(){
     document.querySelectorAll('img').forEach(function(i){ i.addEventListener('load', soon); });
