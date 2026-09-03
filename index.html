@@ -29,7 +29,7 @@
   .btn.primary:hover{background:#E2AE74}
 
   /* PHOTO GRID */
-  .photos{background:var(--forest);border-top:4px solid var(--fern);border-bottom:4px solid var(--fern);padding:6px 20px}
+  .photos{background:var(--forest);border-top:4px solid var(--fern);border-bottom:4px solid var(--fern);padding:20px}
   .photos .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:680px;margin:0 auto;perspective:900px}
   .photos .grid button{--mx:50%;--my:50%;--rx:0deg;--ry:0deg;position:relative;display:block;padding:0;border:0;background:none;cursor:pointer;border-radius:6px;overflow:hidden;aspect-ratio:3/2;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease-out;transform-style:preserve-3d}
   .photos .grid button img{display:block;width:100%;height:100%;object-fit:cover;filter:sepia(.25) saturate(1.15) hue-rotate(-6deg);transition:filter .35s ease-out,transform .5s cubic-bezier(.2,.8,.2,1)}
@@ -61,7 +61,7 @@
   .rows{display:flex;flex-direction:column;gap:12px}
   #schedule{position:relative;scroll-margin-top:12px}
   .row{--glow:var(--sage);display:block;padding:0;background:#fff;border-radius:16px;border:1px solid var(--linen);transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease-out,border-color .35s ease-out}
-  .row summary,.row .summary-like{position:relative;display:grid;grid-template-columns:100px 1fr;gap:16px;padding:16px;list-style:none;border-radius:16px;overflow:hidden;isolation:isolate}
+  .row summary,.row .summary-like{position:relative;display:grid;grid-template-columns:96px 1fr;gap:22px;padding:16px;list-style:none;border-radius:16px;overflow:hidden;isolation:isolate}
   .row summary>*,.row .summary-like>*{position:relative;z-index:1}
   .row summary{cursor:pointer}
   .row summary::-webkit-details-marker{display:none}
@@ -81,34 +81,38 @@
   .row[open]:hover{transform:none}
   .row .open{display:inline-block;font-size:14px;color:var(--fern);margin-top:8px;text-decoration:underline;text-underline-offset:3px}
   .row[open] .open{display:none}
-  .row.featured .open{color:var(--leaf)}
+  .row.featured .open{color:var(--fern)}
   .row .more{padding:0 16px 18px 132px}
   @media(max-width:520px){.row .more{padding-left:16px}}
   .row .more .pics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:4px 0 12px}
   .row .more .pics img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px}
   .row .more p{font-size:15px;color:var(--fern);max-width:60ch}
   .row .more p+p{margin-top:8px}
-  .row.featured{background:linear-gradient(135deg,var(--forest) 0%,#0f2814 100%);color:var(--cream);border-color:var(--forest)}
+  
+  .row.featured{background:#fff;color:inherit;border-color:var(--sage);box-shadow:inset 5px 0 0 var(--fern)}
   .row summary>div:nth-child(2) p,.row .summary-like>div:nth-child(2) p{max-width:34ch}
-  .row .d{font-family:"DM Serif Display",Georgia,serif;font-size:44px;line-height:1}
-  .row .d small{display:block;font-family:"Space Mono",monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:6px;color:var(--fern)}
-  .row.featured .d small{color:var(--leaf)}
-  .row.next{border-color:var(--sand);box-shadow:0 0 0 2px var(--sand)}
+  .row .d{position:relative;font-family:"DM Serif Display",Georgia,serif;font-size:52px;line-height:1;padding-right:22px;text-align:left;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+  .row .d::after{content:"";position:absolute;top:2px;right:0;bottom:2px;width:1px;background:var(--linen)}
+  
+  .row .d small{display:block;font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-top:8px;color:var(--fern);min-height:1em}
+  .row.featured .d small{color:var(--fern)}
+  .row.next{border-color:var(--sand);box-shadow:inset 0 0 0 2px var(--sand)}
+  .row.featured.next{box-shadow:inset 5px 0 0 var(--fern),inset 0 0 0 2px var(--sand)}
   .row.next .d small{color:var(--forest)}
   .row.past{opacity:.55}
-  .tag.off{background:#5F5B52;color:var(--cream)}
+  .tag.off{background:#5F5B52;border-color:#5F5B52;color:var(--cream)}
   .row.cancelled{background:#FBF9F5}
   .row.cancelled .d,.row.cancelled h3{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:#5F5B52}
   .row.cancelled .d small{text-decoration:none;color:#6E6A60}
   .row.cancelled p,.row.cancelled .open{color:#6E6A60}
   .row.cancelled:hover{transform:none;box-shadow:none;border-color:var(--linen)}
   .row.cancelled .bg{display:none}
-  .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--fern);color:var(--cream);margin-bottom:8px}
-  .tag.event{background:var(--sand);color:var(--forest)}
-  .tag.themed{background:var(--fern)}
+  .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:none;border:1px solid var(--sage);color:var(--fern);margin-bottom:8px}
+  .tag.event{background:var(--sand);border-color:var(--sand);color:var(--forest)}
+  .tag.themed{border-color:var(--sage)}
   .row h3{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-size:26px;margin-bottom:4px}
   .row p{font-size:15px;color:var(--fern)}
-  .row.featured p{color:var(--linen)}
+  .row.featured p{color:var(--fern)}
   .note{font-size:14px;color:var(--fern);margin-top:16px}
 
   /* FIND US */
@@ -161,6 +165,59 @@
   </div>
 </header>
 
+<section id="schedule"><div class="wrap">
+  <div class="month"><h2 class="serif">September</h2><span class="hours">Sundays 11am–2pm</span></div>
+  <div class="rows">
+    <details class="row" data-date="2026-09-06" style="--glow:#8A7A52">
+      <summary><div class="d">6<small></small></div><div><span class="tag">Workday</span><h3>Seed collecting</h3><p>Collect seeds from this year's plants. Take some home.</p><span class="open">See more</span></div><div class="bg"><img src="_assets/photos/gallery-02-plantify-patch.jpg" alt="" loading="lazy"></div></summary>
+      <div class="more">
+        <div class="pics">
+          <img src="_assets/photos/seed-01-kids-sieves.jpg" alt="Kids rubbing dried seed heads over sieves at a garden table" loading="lazy">
+          <img src="_assets/photos/seed-02-hands-sorghum.jpg" alt="Hands threshing sorghum seeds over a steel sieve" loading="lazy">
+          <img src="_assets/photos/seed-03-packet-spoon.jpg" alt="Spooning seeds into a hand-labeled paper packet" loading="lazy">
+        </div>
+        <p>Dried seed heads get rubbed over a sieve. The seeds fall through, the chaff stays behind. Then you spoon them into a small paper packet, write the name on it, and it goes home with you.</p>
+        <p>No experience needed. Sieves, trays, packets and markers are on the table.</p>
+      </div>
+    </details>
+    <details class="row" data-date="2026-09-13" style="--glow:#946430">
+      <summary><div class="d">13<small></small></div><div><span class="tag">Workday</span><h3>Compost bag giveaway prep</h3><p>Bag up finished compost to give away. Gloves provided.</p><span class="open">See more</span></div><div class="bg"><img src="_assets/photos/compost-01-pile.jpg" alt="" loading="lazy"></div></summary>
+      <div class="more">
+        <div class="pics">
+          <img src="_assets/photos/compost-02-bin-demo.jpg" alt="Showing the inside of a compost bin at a garden workshop" loading="lazy">
+          <img src="_assets/photos/strip-09-compost-garden.jpg" alt="Woman in lush community garden" loading="lazy">
+          <img src="_assets/photos/strip-02-compost-sunflowers.jpg" alt="Community garden gathering among sunflowers" loading="lazy">
+        </div>
+        <p>The pile that has been cooking since spring gets turned, sifted and bagged. The bags go out free to whoever wants one. Shovels, sifters and bags are there. Wear shoes you do not mind getting dirty.</p>
+      </div>
+    </details>
+    <details class="row featured" data-date="2026-09-20" style="--glow:#8ECF97">
+      <summary><div class="d">20<small></small></div><div><span class="tag event">Community event</span><h3>Fall crop harvest</h3><p>Pick this season's crops. Bring a bag to take some home.</p><span class="open">See more</span></div><div class="bg"><img src="_assets/photos/strip-03-burooj-harvesting.jpg" alt="" loading="lazy"></div></summary>
+      <div class="more">
+        <div class="pics">
+          <img src="_assets/photos/strip-11-women-harvesting.jpg" alt="Two people harvesting greens in the garden beds" loading="lazy">
+          <img src="_assets/photos/strip-01-gwu-tomatoes.jpg" alt="Ripe tomatoes on the vine" loading="lazy">
+          <img src="_assets/photos/strip-08-harvest-girl.jpg" alt="Girl among garden greens and marigolds" loading="lazy">
+        </div>
+        <p>This is the month's public event. Whatever is ready in the beds gets picked, and you take some home.</p>
+        <p>Bring a bag. Everything else is provided, and there is nothing to sign up for.</p>
+      </div>
+    </details>
+    <details class="row" data-date="2026-09-27" style="--glow:#6190D1">
+      <summary><div class="d">27<small></small></div><div><span class="tag themed">Community Connect</span><h3>Games in the garden</h3><p>Board games and snacks.</p><span class="open">See more</span></div><div class="bg"><img src="_assets/photos/games-01-canopy.jpg" alt="" loading="lazy"></div></summary>
+      <div class="more">
+        <div class="pics">
+          <img src="_assets/photos/games-02-catan-hands.jpg" alt="Hands over a Catan board on a gingham tablecloth" loading="lazy">
+          <img src="_assets/photos/games-03-table-mural.jpg" alt="Players at a picnic table under the canopy, garden mural behind" loading="lazy">
+          <img src="_assets/photos/strip-05-sips-gathering.jpg" alt="Community gathering through garden foliage" loading="lazy">
+        </div>
+        <p>Tables under the shade tent, Catan, Jenga, Lotería and whatever you bring. Snacks on the side table. Come for one game or stay the whole afternoon.</p>
+      </div>
+    </details>
+  </div>
+  <p class="note">All Sundays run as weather permits. Check your email for schedule changes. October dates are posted here at the end of the month.</p>
+</div></section>
+
 <div class="photos">
   <div class="grid" id="gallery">
     <button type="button" data-full="_assets/photos/gallery-01-pergola-gathering.jpg"><img src="_assets/photos/thumbs/gallery-01-pergola-gathering.jpg" alt="Neighbors gathered under the pergola among the sunflowers"></button>
@@ -181,59 +238,6 @@
     <button type="button" data-full="_assets/photos/gallery-06-crowd-under-trees.jpg"><img src="_assets/photos/thumbs/gallery-06-crowd-under-trees.jpg" alt="Crowd under the trees at Sips and Scents" loading="lazy"></button>
   </div>
 </div>
-
-<section id="schedule"><div class="wrap">
-  <div class="month"><h2 class="serif">September</h2><span class="hours">Sundays 11am–2pm</span></div>
-  <div class="rows">
-    <details class="row" data-date="2026-09-06" style="--glow:#8A7A52">
-      <summary><div class="d">6<small>Sun</small></div><div><span class="tag">Workday</span><h3>Seed collecting</h3><p>Collect seeds from this year's plants. Take some home.</p><span class="open">See how it works</span></div><div class="bg"><img src="_assets/photos/gallery-02-plantify-patch.jpg" alt="" loading="lazy"></div></summary>
-      <div class="more">
-        <div class="pics">
-          <img src="_assets/photos/seed-01-kids-sieves.jpg" alt="Kids rubbing dried seed heads over sieves at a garden table" loading="lazy">
-          <img src="_assets/photos/seed-02-hands-sorghum.jpg" alt="Hands threshing sorghum seeds over a steel sieve" loading="lazy">
-          <img src="_assets/photos/seed-03-packet-spoon.jpg" alt="Spooning seeds into a hand-labeled paper packet" loading="lazy">
-        </div>
-        <p>Dried seed heads get rubbed over a sieve. The seeds fall through, the chaff stays behind. Then you spoon them into a small paper packet, write the name on it, and it goes home with you.</p>
-        <p>No experience needed. Sieves, trays, packets and markers are on the table.</p>
-      </div>
-    </details>
-    <details class="row" data-date="2026-09-13" style="--glow:#946430">
-      <summary><div class="d">13<small>Sun</small></div><div><span class="tag">Workday</span><h3>Compost bag giveaway prep</h3><p>Bag up finished compost to give away. Gloves provided.</p><span class="open">See what we do</span></div><div class="bg"><img src="_assets/photos/compost-01-pile.jpg" alt="" loading="lazy"></div></summary>
-      <div class="more">
-        <div class="pics">
-          <img src="_assets/photos/compost-02-bin-demo.jpg" alt="Showing the inside of a compost bin at a garden workshop" loading="lazy">
-          <img src="_assets/photos/strip-09-compost-garden.jpg" alt="Woman in lush community garden" loading="lazy">
-          <img src="_assets/photos/strip-02-compost-sunflowers.jpg" alt="Community garden gathering among sunflowers" loading="lazy">
-        </div>
-        <p>The pile that has been cooking since spring gets turned, sifted and bagged. The bags go out free to whoever wants one. Shovels, sifters and bags are there. Wear shoes you do not mind getting dirty.</p>
-      </div>
-    </details>
-    <details class="row featured" data-date="2026-09-20" style="--glow:#8ECF97">
-      <summary><div class="d">20<small>Sun</small></div><div><span class="tag event">Community event</span><h3>Fall crop harvest</h3><p>Pick this season's crops. Bring a bag to take some home.</p><span class="open">See what a harvest day looks like</span></div><div class="bg"><img src="_assets/photos/strip-03-burooj-harvesting.jpg" alt="" loading="lazy"></div></summary>
-      <div class="more">
-        <div class="pics">
-          <img src="_assets/photos/strip-11-women-harvesting.jpg" alt="Two people harvesting greens in the garden beds" loading="lazy">
-          <img src="_assets/photos/strip-01-gwu-tomatoes.jpg" alt="Ripe tomatoes on the vine" loading="lazy">
-          <img src="_assets/photos/strip-08-harvest-girl.jpg" alt="Girl among garden greens and marigolds" loading="lazy">
-        </div>
-        <p>This is the month's public event. Whatever is ready in the beds gets picked, and you take some home.</p>
-        <p>Bring a bag. Everything else is provided, and there is nothing to sign up for.</p>
-      </div>
-    </details>
-    <details class="row" data-date="2026-09-27" style="--glow:#6190D1">
-      <summary><div class="d">27<small>Sun</small></div><div><span class="tag themed">Community Connect</span><h3>Games in the garden</h3><p>Board games and snacks.</p><span class="open">See a past game day</span></div><div class="bg"><img src="_assets/photos/games-01-canopy.jpg" alt="" loading="lazy"></div></summary>
-      <div class="more">
-        <div class="pics">
-          <img src="_assets/photos/games-02-catan-hands.jpg" alt="Hands over a Catan board on a gingham tablecloth" loading="lazy">
-          <img src="_assets/photos/games-03-table-mural.jpg" alt="Players at a picnic table under the canopy, garden mural behind" loading="lazy">
-          <img src="_assets/photos/strip-05-sips-gathering.jpg" alt="Community gathering through garden foliage" loading="lazy">
-        </div>
-        <p>Tables under the shade tent, Catan, Jenga, Lotería and whatever you bring. Snacks on the side table. Come for one game or stay the whole afternoon.</p>
-      </div>
-    </details>
-  </div>
-  <p class="note">All Sundays run as weather permits. Check your email for schedule changes. October dates are posted here at the end of the month.</p>
-</div></section>
 
 <section><div class="wrap map">
   <div class="addr">
