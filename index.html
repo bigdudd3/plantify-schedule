@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sundays at Paradise Community Garden | Plantify</title>
+<style>
+  @font-face{font-family:"DM Sans";src:url("_assets/fonts/DMSans-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"DM Sans";src:url("_assets/fonts/DMSans-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+  @font-face{font-family:"DM Serif Display";src:url("_assets/fonts/DMSerifDisplay-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"Space Mono";src:url("_assets/fonts/SpaceMono-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+</style>
+<style>
+  :root{--forest:#1A3A22;--cream:#F7F3EC;--clay:#C4895A;--sand:#D9A162;--sage:#6B8F5E;--leaf:#A8C498;--fern:#4A7040;--linen:#EDE8DF;--bark:#3D2B1F}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"DM Sans",system-ui,sans-serif;background:var(--cream);color:var(--forest);line-height:1.5}
+  .serif{font-family:"DM Serif Display",Georgia,serif;font-weight:400;line-height:1.05}
+  .mono{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:.14em;font-size:12px}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px}
+  img{display:block;max-width:100%}
+
+  /* HERO */
+  .hero{background:linear-gradient(160deg,var(--forest) 0%,#15301c 100%);color:var(--cream);padding:28px 0 32px;position:relative;overflow:hidden}
+  .hero .mono{color:var(--leaf)}
+  .hero h1{font-size:clamp(38px,9vw,60px);margin:10px 0 6px}
+  .hero .when{font-size:clamp(20px,5vw,26px);margin:0 0 18px;color:var(--cream)}
+  .hero .when b{color:#8ECF97;font-weight:500}
+  .hero p{font-size:17px;max-width:520px;color:var(--linen)}
+  .btn{display:inline-block;padding:14px 20px;border-radius:12px;font-weight:500;text-decoration:none;font-size:16px}
+  .btn.primary{background:var(--sand);color:var(--forest)}
+  .btn.primary:hover{background:#E2AE74}
+
+  /* PHOTO GRID */
+  .photos{background:var(--forest);border-top:4px solid var(--fern);border-bottom:4px solid var(--fern);padding:6px 20px}
+  .photos .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:680px;margin:0 auto;perspective:900px}
+  .photos .grid button{--mx:50%;--my:50%;--rx:0deg;--ry:0deg;position:relative;display:block;padding:0;border:0;background:none;cursor:pointer;border-radius:6px;overflow:hidden;aspect-ratio:3/2;transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease-out;transform-style:preserve-3d}
+  .photos .grid button img{display:block;width:100%;height:100%;object-fit:cover;filter:sepia(.25) saturate(1.15) hue-rotate(-6deg);transition:filter .35s ease-out,transform .5s cubic-bezier(.2,.8,.2,1)}
+  .photos .grid button::after{content:"";position:absolute;inset:0;background:radial-gradient(160px circle at var(--mx) var(--my),rgba(255,250,236,.28),transparent 65%);opacity:0;transition:opacity .3s ease-out;pointer-events:none}
+  .photos .grid button:hover,.photos .grid button:focus-visible{z-index:2;box-shadow:0 0 0 1px rgba(142,207,151,.45),0 18px 40px -14px rgba(0,0,0,.7)}
+  .photos .grid button:hover img,.photos .grid button:focus-visible img{filter:sepia(0) saturate(1.1);transform:scale(1.08)}
+  .photos .grid button:hover::after{opacity:1}
+  .photos .grid button:focus-visible{outline:3px solid var(--sand);outline-offset:2px}
+  /* lightbox */
+  .lb{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 80px;background:rgba(10,24,14,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:opacity .25s ease-out,visibility 0s .25s}
+  .lb.on{opacity:1;visibility:visible;transition:opacity .25s ease-out}
+  .lb img{max-width:min(1100px,100%);max-height:80vh;border-radius:12px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);transform:scale(.94);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .lb.on img{transform:scale(1)}
+  .lb figcaption{margin-top:14px;color:var(--linen);font-size:15px;text-align:center;max-width:60ch}
+  .lb button{position:absolute;background:rgba(247,243,236,.1);color:var(--cream);border:1px solid rgba(247,243,236,.25);border-radius:999px;width:48px;height:48px;font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center}
+  .lb button:hover{background:rgba(247,243,236,.22)}
+  .lb .x{top:18px;right:18px}
+  .lb .prev{left:18px;top:50%;transform:translateY(-50%)}
+  .lb .next{right:18px;top:50%;transform:translateY(-50%)}
+  .lb .count{position:absolute;top:30px;left:24px;color:var(--leaf);font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.14em}
+  body.lb-open{overflow:hidden}
+
+  /* SCHEDULE */
+  section{padding:36px 0}
+  h2.serif{font-size:32px;margin-bottom:16px}
+  .month{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:16px}
+  .month h2{margin-bottom:0}
+  .month .hours{font-size:15px;color:var(--fern)}
+  .rows{display:flex;flex-direction:column;gap:12px}
+  #schedule{position:relative;scroll-margin-top:12px}
+  .row{--glow:var(--sage);display:block;padding:0;background:#fff;border-radius:16px;border:1px solid var(--linen);transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease-out,border-color .35s ease-out}
+  .row summary,.row .summary-like{position:relative;display:grid;grid-template-columns:100px 1fr;gap:16px;padding:16px;list-style:none;border-radius:16px;overflow:hidden;isolation:isolate}
+  .row summary>*,.row .summary-like>*{position:relative;z-index:1}
+  .row summary{cursor:pointer}
+  .row summary::-webkit-details-marker{display:none}
+  .row summary:focus-visible{outline:3px solid var(--sand);outline-offset:2px}
+  /* photo beneath the text: masked so the left side stays clean, plus a soft colour wash pulled from the photo */
+  .row .bg{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity .4s ease-out}
+  .row .bg img{width:100%;height:100%;object-fit:cover;object-position:center 40%;opacity:.72;transform:scale(1.06);transition:transform .9s cubic-bezier(.2,.8,.2,1);-webkit-mask-image:linear-gradient(90deg,transparent 40%,rgba(0,0,0,.25) 60%,rgba(0,0,0,.85) 82%,#000 100%);mask-image:linear-gradient(90deg,transparent 40%,rgba(0,0,0,.25) 60%,rgba(0,0,0,.85) 82%,#000 100%)}
+  .row .bg::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,color-mix(in srgb,var(--glow) 14%,transparent) 0%,color-mix(in srgb,var(--glow) 5%,transparent) 45%,transparent 70%)}
+  .row.featured .bg img{opacity:.92;-webkit-mask-image:linear-gradient(90deg,transparent 30%,rgba(0,0,0,.3) 55%,rgba(0,0,0,.75) 80%,rgba(0,0,0,.85) 100%);mask-image:linear-gradient(90deg,transparent 30%,rgba(0,0,0,.3) 55%,rgba(0,0,0,.75) 80%,rgba(0,0,0,.85) 100%)}
+  /* hover: photo in, edge glow + colour spill out (the Hue effect) */
+  .row:not(.past):hover,.row summary:focus-visible{transform:translateY(-2px)}
+  .row:not(.past):hover .bg,.row summary:focus-visible .bg{opacity:1}
+  .row:not(.past):hover .bg img,.row summary:focus-visible .bg img{transform:scale(1)}
+  .row:not(.past):hover{border-color:color-mix(in srgb,var(--glow) 55%,var(--linen));box-shadow:0 0 0 1px color-mix(in srgb,var(--glow) 35%,transparent),0 0 0 6px color-mix(in srgb,var(--glow) 9%,transparent),0 14px 44px -14px color-mix(in srgb,var(--glow) 70%,transparent)}
+  .row.next:not(.past):hover{box-shadow:0 0 0 2px var(--sand),0 0 0 7px color-mix(in srgb,var(--glow) 10%,transparent),0 14px 44px -14px color-mix(in srgb,var(--glow) 70%,transparent)}
+  .row[open] .bg{opacity:0}
+  .row[open]:hover{transform:none}
+  .row .open{display:inline-block;font-size:14px;color:var(--fern);margin-top:8px;text-decoration:underline;text-underline-offset:3px}
+  .row[open] .open{display:none}
+  .row.featured .open{color:var(--leaf)}
+  .row .more{padding:0 16px 18px 132px}
+  @media(max-width:520px){.row .more{padding-left:16px}}
+  .row .more .pics{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:4px 0 12px}
+  .row .more .pics img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px}
+  .row .more p{font-size:15px;color:var(--fern);max-width:60ch}
+  .row .more p+p{margin-top:8px}
+  .row.featured{background:linear-gradient(135deg,var(--forest) 0%,#0f2814 100%);color:var(--cream);border-color:var(--forest)}
+  .row summary>div:nth-child(2) p,.row .summary-like>div:nth-child(2) p{max-width:34ch}
+  .row .d{font-family:"DM Serif Display",Georgia,serif;font-size:44px;line-height:1}
+  .row .d small{display:block;font-family:"Space Mono",monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-top:6px;color:var(--fern)}
+  .row.featured .d small{color:var(--leaf)}
+  .row.next{border-color:var(--sand);box-shadow:0 0 0 2px var(--sand)}
+  .row.next .d small{color:var(--forest)}
+  .row.past{opacity:.55}
+  .tag.off{background:#5F5B52;color:var(--cream)}
+  .row.cancelled{background:#FBF9F5}
+  .row.cancelled .d,.row.cancelled h3{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:#5F5B52}
+  .row.cancelled .d small{text-decoration:none;color:#6E6A60}
+  .row.cancelled p,.row.cancelled .open{color:#6E6A60}
+  .row.cancelled:hover{transform:none;box-shadow:none;border-color:var(--linen)}
+  .row.cancelled .bg{display:none}
+  .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--fern);color:var(--cream);margin-bottom:8px}
+  .tag.event{background:var(--sand);color:var(--forest)}
+  .tag.themed{background:var(--fern)}
+  .row h3{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-size:26px;margin-bottom:4px}
+  .row p{font-size:15px;color:var(--fern)}
+  .row.featured p{color:var(--linen)}
+  .note{font-size:14px;color:var(--fern);margin-top:16px}
+
+  /* FIND US */
+  .map{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+  .map .addr{font-size:18px}
+  .map .addr .mono{color:var(--sage);margin-bottom:6px}
+  .map .box{border-radius:16px;overflow:hidden;aspect-ratio:4/3;border:0}
+  .map .box iframe{width:100%;height:100%;border:0;display:block}
+
+  .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  /* STAY IN TOUCH */
+  .keep{border-top:1px solid var(--linen);padding-top:26px;margin-top:8px}
+  .keep h2{font-family:"DM Serif Display",Georgia,serif;font-weight:400;font-size:26px;margin-bottom:4px}
+  .keep>p{font-size:15px;color:var(--fern);max-width:52ch;margin-bottom:16px}
+  .keep form{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .keep input[type=email]{flex:1 1 240px;min-width:0;font:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--sage);border-radius:999px;background:#fff;color:var(--forest)}
+  .keep input[type=email]::placeholder{color:#6E6A60}
+  .keep input[type=email]:focus-visible{outline:3px solid var(--sand);outline-offset:2px;border-color:var(--fern)}
+  .keep .btn{border:0;cursor:pointer;font:inherit;font-size:16px}
+  .keep .social{display:flex;flex-wrap:wrap;gap:8px}
+  .keep .social a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--sage);border-radius:999px;color:var(--forest);font-size:15px;transition:background .18s ease-out,border-color .18s ease-out}
+  .keep .social a:hover{background:#fff;border-color:var(--fern)}
+  .keep .social svg{width:18px;height:18px;flex:none}
+
+  /* FOOTER */
+  footer{padding:28px 0;font-size:14px;color:var(--fern)}
+  footer .mono{color:var(--sage)}
+  footer a{color:var(--fern);display:inline-block;padding:12px 0}
+
+  @media(max-width:520px){
+    .map{grid-template-columns:1fr}
+    .photos .grid{grid-template-columns:repeat(2,1fr)}
+    .photos .grid button{transform:none!important}
+    .lb{padding:24px 16px 90px}
+    .lb .prev,.lb .next{top:auto;bottom:18px;transform:none}
+    .month{flex-direction:column;align-items:flex-start;gap:2px}
+    .row .more .pics{grid-template-columns:1fr 1fr}
+    .row .more .pics img:first-child{grid-column:1/-1}
+    .row:not(.past):hover{transform:none}
+  }
+  @media(prefers-reduced-motion:reduce){.photos .grid button,.photos .grid button img,.lb,.lb img,.row,.row .bg,.row .bg img{transition:none!important;transform:none!important}}
+</style></head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1 class="serif">Grow with us</h1>
+    <div class="when">Every Sunday Open Garden<br><b>11am–2pm</b></div>
+    <p>Free. All ages. No RSVP.</p>
+  </div>
+</header>
+
+<div class="photos">
+  <div class="grid" id="gallery">
+    <button type="button" data-full="_assets/photos/gallery-01-pergola-gathering.jpg"><img src="_assets/photos/thumbs/gallery-01-pergola-gathering.jpg" alt="Neighbors gathered under the pergola among the sunflowers"></button>
+    <button type="button" data-full="_assets/photos/gallery-11-seed-sieves.jpg"><img src="_assets/photos/thumbs/gallery-11-seed-sieves.jpg" alt="Kids rubbing dried seed heads over sieves at a garden table"></button>
+    <button type="button" data-full="_assets/photos/gallery-08-pink-drink.jpg"><img src="_assets/photos/thumbs/gallery-08-pink-drink.jpg" alt="Berry lemonade with a paper umbrella at Sips and Scents"></button>
+    <button type="button" data-full="_assets/photos/gallery-13-weeding-bed.jpg"><img src="_assets/photos/thumbs/gallery-13-weeding-bed.jpg" alt="Volunteers of all ages weeding a wood-chip garden bed"></button>
+    <button type="button" data-full="_assets/photos/gallery-03-goat.jpg"><img src="_assets/photos/thumbs/gallery-03-goat.jpg" alt="Boy in green gloves holding a baby goat" loading="lazy"></button>
+    <button type="button" data-full="_assets/photos/gallery-10-welcome-tent.jpg"><img src="_assets/photos/thumbs/gallery-10-welcome-tent.jpg" alt="Welcome tent and chalkboard at the garden gate" loading="lazy"></button>
+    <button type="button" data-full="_assets/photos/gallery-15-hands-greens.jpg"><img src="_assets/photos/thumbs/gallery-15-hands-greens.jpg" alt="A bare hand and a gloved hand holding a bunch of leafy greens" loading="lazy"></button>
+    <button type="button" data-full="_assets/photos/gallery-14-toddler-board.jpg"><img src="_assets/photos/thumbs/gallery-14-toddler-board.jpg" alt="A toddler in a bucket hat carrying a board past the kids' chairs" loading="lazy"></button>
+    <button type="button" data-full="_assets/photos/gallery-07-sips-booth.jpg"><img src="_assets/photos/thumbs/gallery-07-sips-booth.jpg" alt="Volunteer serving drinks at the Plantify booth" loading="lazy"></button>
+    <button type="button" data-full="_assets/photos/gallery-05-kids-growbags.jpg"><img src="_assets/photos/thumbs/gallery-05-kids-growbags.jpg" alt="Kids filling fabric grow bags with soil" loading="lazy"></button>
+    <button type="button" data-full="_assets/photos/gallery-02-plantify-patch.jpg"><img src="_assets/photos/thumbs/gallery-02-plantify-patch.jpg" alt="The Plantify Patch sign among tall corn" loading="lazy"></button>
+    <button type="button" data-full="_assets/photos/gallery-16-clearing-plot.jpg"><img src="_assets/photos/thumbs/gallery-16-clearing-plot.jpg" alt="Two gardeners with a cultivator and wheelbarrow clearing a grassy plot" loading="lazy"></button>
+    <button type="button" data-full="_assets/photos/gallery-04-potting-hands.jpg"><img src="_assets/photos/thumbs/gallery-04-potting-hands.jpg" alt="Gloved hands potting dill seedlings" loading="lazy"></button>
+    <button type="button" data-full="_assets/photos/gallery-12-game-day.jpg"><img src="_assets/photos/thumbs/gallery-12-game-day.jpg" alt="Game day tables under the shade tent" loading="lazy"></button>
+    <button type="button" data-full="_assets/photos/gallery-09-picnic-umbrella.jpg"><img src="_assets/photos/thumbs/gallery-09-picnic-umbrella.jpg" alt="Picnic table under the green umbrella beside the raised beds" loading="lazy"></button>
+    <button type="button" data-full="_assets/photos/gallery-06-crowd-under-trees.jpg"><img src="_assets/photos/thumbs/gallery-06-crowd-under-trees.jpg" alt="Crowd under the trees at Sips and Scents" loading="lazy"></button>
+  </div>
+</div>
+
+<section id="schedule"><div class="wrap">
+  <div class="month"><h2 class="serif">September</h2><span class="hours">Sundays 11am–2pm</span></div>
+  <div class="rows">
+    <details class="row" data-date="2026-09-06" style="--glow:#8A7A52">
+      <summary><div class="d">6<small>Sun</small></div><div><span class="tag">Workday</span><h3>Seed collecting</h3><p>Collect seeds from this year's plants. Take some home.</p><span class="open">See how it works</span></div><div class="bg"><img src="_assets/photos/gallery-02-plantify-patch.jpg" alt="" loading="lazy"></div></summary>
+      <div class="more">
+        <div class="pics">
+          <img src="_assets/photos/seed-01-kids-sieves.jpg" alt="Kids rubbing dried seed heads over sieves at a garden table" loading="lazy">
+          <img src="_assets/photos/seed-02-hands-sorghum.jpg" alt="Hands threshing sorghum seeds over a steel sieve" loading="lazy">
+          <img src="_assets/photos/seed-03-packet-spoon.jpg" alt="Spooning seeds into a hand-labeled paper packet" loading="lazy">
+        </div>
+        <p>Dried seed heads get rubbed over a sieve. The seeds fall through, the chaff stays behind. Then you spoon them into a small paper packet, write the name on it, and it goes home with you.</p>
+        <p>No experience needed. Sieves, trays, packets and markers are on the table.</p>
+      </div>
+    </details>
+    <details class="row" data-date="2026-09-13" style="--glow:#946430">
+      <summary><div class="d">13<small>Sun</small></div><div><span class="tag">Workday</span><h3>Compost bag giveaway prep</h3><p>Bag up finished compost to give away. Gloves provided.</p><span class="open">See what we do</span></div><div class="bg"><img src="_assets/photos/compost-01-pile.jpg" alt="" loading="lazy"></div></summary>
+      <div class="more">
+        <div class="pics">
+          <img src="_assets/photos/compost-02-bin-demo.jpg" alt="Showing the inside of a compost bin at a garden workshop" loading="lazy">
+          <img src="_assets/photos/strip-09-compost-garden.jpg" alt="Woman in lush community garden" loading="lazy">
+          <img src="_assets/photos/strip-02-compost-sunflowers.jpg" alt="Community garden gathering among sunflowers" loading="lazy">
+        </div>
+        <p>The pile that has been cooking since spring gets turned, sifted and bagged. The bags go out free to whoever wants one. Shovels, sifters and bags are there. Wear shoes you do not mind getting dirty.</p>
+      </div>
+    </details>
+    <details class="row featured" data-date="2026-09-20" style="--glow:#8ECF97">
+      <summary><div class="d">20<small>Sun</small></div><div><span class="tag event">Community event</span><h3>Fall crop harvest</h3><p>Pick this season's crops. Bring a bag to take some home.</p><span class="open">See what a harvest day looks like</span></div><div class="bg"><img src="_assets/photos/strip-03-burooj-harvesting.jpg" alt="" loading="lazy"></div></summary>
+      <div class="more">
+        <div class="pics">
+          <img src="_assets/photos/strip-11-women-harvesting.jpg" alt="Two people harvesting greens in the garden beds" loading="lazy">
+          <img src="_assets/photos/strip-01-gwu-tomatoes.jpg" alt="Ripe tomatoes on the vine" loading="lazy">
+          <img src="_assets/photos/strip-08-harvest-girl.jpg" alt="Girl among garden greens and marigolds" loading="lazy">
+        </div>
+        <p>This is the month's public event. Whatever is ready in the beds gets picked, and you take some home.</p>
+        <p>Bring a bag. Everything else is provided, and there is nothing to sign up for.</p>
+      </div>
+    </details>
+    <details class="row" data-date="2026-09-27" style="--glow:#6190D1">
+      <summary><div class="d">27<small>Sun</small></div><div><span class="tag themed">Community Connect</span><h3>Games in the garden</h3><p>Board games and snacks.</p><span class="open">See a past game day</span></div><div class="bg"><img src="_assets/photos/games-01-canopy.jpg" alt="" loading="lazy"></div></summary>
+      <div class="more">
+        <div class="pics">
+          <img src="_assets/photos/games-02-catan-hands.jpg" alt="Hands over a Catan board on a gingham tablecloth" loading="lazy">
+          <img src="_assets/photos/games-03-table-mural.jpg" alt="Players at a picnic table under the canopy, garden mural behind" loading="lazy">
+          <img src="_assets/photos/strip-05-sips-gathering.jpg" alt="Community gathering through garden foliage" loading="lazy">
+        </div>
+        <p>Tables under the shade tent, Catan, Jenga, Lotería and whatever you bring. Snacks on the side table. Come for one game or stay the whole afternoon.</p>
+      </div>
+    </details>
+  </div>
+  <p class="note">All Sundays run as weather permits. Check your email for schedule changes. October dates are posted here at the end of the month.</p>
+</div></section>
+
+<section><div class="wrap map">
+  <div class="addr">
+    <b>Paradise Community Garden</b><br>20097 Mission Blvd<br>Hayward, CA 94541<br><br>
+    <a class="btn primary" href="https://maps.google.com/?q=20097+Mission+Blvd+Hayward+CA+94541">Open in Maps</a>
+  </div>
+  <div class="box"><iframe src="https://www.google.com/maps?q=20097+Mission+Blvd,+Hayward,+CA+94541&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Paradise Community Garden location"></iframe></div>
+</div></section>
+
+<section><div class="wrap keep">
+  <h2>Stay in touch</h2>
+  <p>Seasonal notes on what is growing, what we are building, and when the schedule shifts.</p>
+  <form action="https://plantify.us8.list-manage.com/subscribe/post" method="post" target="_blank">
+    <input type="hidden" name="u" value="828c640a6fa87d15056108d0e">
+    <input type="hidden" name="id" value="798f3fbb0b">
+    <label for="mce-EMAIL" class="sr">Email address</label>
+    <input type="email" id="mce-EMAIL" name="EMAIL" placeholder="you@email.com" required>
+    <button type="submit" class="btn primary">Join the list</button>
+  </form>
+  <div class="social">
+    <a href="https://www.instagram.com/plantifysociety"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>@plantifysociety on Instagram</a>
+    <a href="https://www.facebook.com/plantifysociety"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14.5 8.5V6.9c0-.8.4-1.4 1.4-1.4H17V3h-2.1c-2.3 0-3.4 1.4-3.4 3.5v2h-2V11h2v10h2.5V11h2.2l.4-2.5z"/></svg>Plantify on Facebook</a>
+    <a href="mailto:community@plantify.org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>community@plantify.org</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="mono">Plantify · Community nonprofit</div>
+  Hayward, CA<br>
+  <a href="https://www.plantify.org/grow-with-us.html">Past series, zine, and FAQ</a>
+</div></footer>
+
+<figure class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
+  <span class="count" id="lbCount"></span>
+  <button type="button" class="x" aria-label="Close">&times;</button>
+  <button type="button" class="prev" aria-label="Previous">&#8249;</button>
+  <img id="lbImg" src="" alt="">
+  <figcaption id="lbCap"></figcaption>
+  <button type="button" class="next" aria-label="Next">&#8250;</button>
+</figure>
+
+<script>
+(function(){
+  var today=new Date();today.setHours(0,0,0,0);
+  var rows=document.querySelectorAll('.row[data-date]'),marked=false;
+  rows.forEach(function(r){
+    var p=r.dataset.date.split('-'),d=new Date(p[0],p[1]-1,p[2]);
+    if(d<today){r.classList.add('past');return;}
+    if(!marked){marked=true;r.classList.add('next');
+      var s=r.querySelector('.d small');if(s)s.textContent=(d.getTime()===today.getTime())?'Today':'Next Sun';}
+  });
+})();
+
+(function(){
+  var grid=document.getElementById('gallery'), fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var tiles=[].slice.call(grid.querySelectorAll('button'));
+  if(fine){
+    grid.addEventListener('pointermove',function(e){
+      var b=e.target.closest('button'); if(!b) return;
+      var r=b.getBoundingClientRect(), x=(e.clientX-r.left)/r.width, y=(e.clientY-r.top)/r.height;
+      b.style.setProperty('--mx',(x*100)+'%'); b.style.setProperty('--my',(y*100)+'%');
+      b.style.setProperty('--ry',((x-.5)*10)+'deg'); b.style.setProperty('--rx',((.5-y)*10)+'deg');
+    });
+    tiles.forEach(function(b){b.addEventListener('pointerleave',function(){b.style.setProperty('--rx','0deg');b.style.setProperty('--ry','0deg');});});
+  }
+  var lb=document.getElementById('lb'), img=document.getElementById('lbImg'), cap=document.getElementById('lbCap'), cnt=document.getElementById('lbCount'), i=0, last=null;
+  function show(n){i=(n+tiles.length)%tiles.length; var t=tiles[i], a=t.querySelector('img').alt; img.src=t.dataset.full; img.alt=a; cap.textContent=a; cnt.textContent=(i+1)+' / '+tiles.length; (new Image()).src=tiles[(i+1)%tiles.length].dataset.full;}
+  function open(n){last=document.activeElement; show(n); lb.classList.add('on'); document.body.classList.add('lb-open'); lb.querySelector('.x').focus();}
+  function close(){lb.classList.remove('on'); document.body.classList.remove('lb-open'); if(last) last.focus();}
+  tiles.forEach(function(t,n){t.addEventListener('click',function(){open(n);});});
+  lb.querySelector('.x').addEventListener('click',close);
+  lb.querySelector('.prev').addEventListener('click',function(){show(i-1);});
+  lb.querySelector('.next').addEventListener('click',function(){show(i+1);});
+  lb.addEventListener('click',function(e){if(e.target===lb) close();});
+  document.addEventListener('keydown',function(e){if(!lb.classList.contains('on')) return; if(e.key==='Escape') close(); else if(e.key==='ArrowRight') show(i+1); else if(e.key==='ArrowLeft') show(i-1);});
+  var sx=null; lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
+  lb.addEventListener('touchend',function(e){if(sx===null) return; var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>50) show(dx<0?i+1:i-1); sx=null;});
+})();
+
+(function(){
+  if (window.parent === window) return;
+  var last = 0;
+  function post(){
+    var h = Math.ceil(document.documentElement.getBoundingClientRect().height);
+    if (h && Math.abs(h - last) > 1){ last = h; parent.postMessage({plantifyEmbedHeight: h}, '*'); }
+  }
+  addEventListener('load', post);
+  addEventListener('resize', post);
+  if (window.ResizeObserver) new ResizeObserver(post).observe(document.documentElement);
+  document.addEventListener('toggle', function(){ setTimeout(post, 260); }, true);
+  setTimeout(post, 60); setTimeout(post, 400); setTimeout(post, 1200);
+})();
+</script>
+
+</body></html>
