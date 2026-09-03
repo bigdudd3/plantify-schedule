@@ -315,16 +315,29 @@
 
 (function(){
   if (window.parent === window) return;
-  var last = 0;
+  var last = 0, timer = null;
+  function measure(){
+    var d = document.documentElement, b = document.body;
+    return Math.ceil(Math.max(d.scrollHeight, b ? b.scrollHeight : 0,
+                              d.getBoundingClientRect().height));
+  }
   function post(){
-    var h = Math.ceil(document.documentElement.getBoundingClientRect().height);
+    var h = measure();
     if (h && Math.abs(h - last) > 1){ last = h; parent.postMessage({plantifyEmbedHeight: h}, '*'); }
   }
+  function soon(){ clearTimeout(timer); timer = setTimeout(post, 120); }
   addEventListener('load', post);
-  addEventListener('resize', post);
-  if (window.ResizeObserver) new ResizeObserver(post).observe(document.documentElement);
-  document.addEventListener('toggle', function(){ setTimeout(post, 260); }, true);
-  setTimeout(post, 60); setTimeout(post, 400); setTimeout(post, 1200);
+  addEventListener('resize', soon);
+  if (window.ResizeObserver){
+    var ro = new ResizeObserver(soon);
+    ro.observe(document.documentElement);
+    if (document.body) ro.observe(document.body);
+  }
+  document.addEventListener('toggle', function(){ setTimeout(post, 280); }, true);
+  addEventListener('load', function(){
+    document.querySelectorAll('img').forEach(function(i){ i.addEventListener('load', soon); });
+  });
+  [60, 400, 1200, 2500].forEach(function(t){ setTimeout(post, t); });
 })();
 </script>
 
