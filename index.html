@@ -317,9 +317,13 @@
   if (window.parent === window) return;
   var last = 0, timer = null;
   function measure(){
-    var d = document.documentElement, b = document.body;
-    return Math.ceil(Math.max(d.scrollHeight, b ? b.scrollHeight : 0,
-                              d.getBoundingClientRect().height));
+    // Measure the BODY only. documentElement.scrollHeight inflates to the
+    // viewport height, which feeds back through the parent's iframe height.
+    var b = document.body;
+    if (!b) return 0;
+    var cs = getComputedStyle(b);
+    return Math.ceil(b.getBoundingClientRect().height +
+                     parseFloat(cs.marginTop) + parseFloat(cs.marginBottom));
   }
   function post(){
     var h = measure();
