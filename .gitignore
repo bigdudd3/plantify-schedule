@@ -1,0 +1,7 @@
+.DS_Store
+
+# Photos with no location or rights record, and photos cut from the page.
+# Not referenced by landing-page-mockup.html, so the build never touches them.
+# Kept out of the public repo on purpose.
+src/_assets/photos/unverified-weebly/
+src/_assets/photos/_unused/

@@ -1,0 +1,46 @@
+<!-- Sunflower accent: recreated black-eyed-susan bloom in the flyer's palette,
+     drawn clean. Teardrop petals (rounded base tapering to a soft point),
+     overlapping for a full bloom, gold-to-cream gradient, aubergine center. -->
+<svg viewBox="0 0 240 330" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <radialGradient id="petalGrad" cx="35%" cy="20%" r="85%">
+      <stop offset="0%" stop-color="#F0A93A"/>
+      <stop offset="50%" stop-color="#F6C24A"/>
+      <stop offset="100%" stop-color="#FCE07A"/>
+    </radialGradient>
+    <radialGradient id="centerGrad" cx="38%" cy="32%" r="72%">
+      <stop offset="0%" stop-color="#55303F"/>
+      <stop offset="100%" stop-color="#2E1522"/>
+    </radialGradient>
+    <linearGradient id="stemGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4A7040"/>
+      <stop offset="100%" stop-color="#1A3A22"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M120 158 C 106 205, 130 252, 114 312" stroke="url(#stemGrad)" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M116 216 C 86 212, 66 228, 60 254 C 90 254, 112 242, 116 216 Z" fill="#4A7040"/>
+
+  <g transform="translate(120,112)">
+    <!-- teardrop petal: rounded base and tip, gentle taper, no sharp point -->
+    <g id="petal-a">
+      <path d="M0,-12 C 18,-20 27,-42 22,-66 C 18,-86 10,-98 0,-100 C -10,-98 -18,-86 -22,-66 C -27,-42 -18,-20 0,-12 Z"
+            fill="url(#petalGrad)"/>
+    </g>
+    <g id="petal-b">
+      <path d="M0,-12 C 16,-19 24,-38 20,-58 C 16,-76 9,-87 0,-89 C -9,-87 -16,-76 -20,-58 C -24,-38 -16,-19 0,-12 Z"
+            fill="url(#petalGrad)"/>
+    </g>
+    <use href="#petal-a" transform="rotate(2)"/>
+    <use href="#petal-b" transform="rotate(38)"/>
+    <use href="#petal-a" transform="rotate(71)"/>
+    <use href="#petal-b" transform="rotate(107)"/>
+    <use href="#petal-a" transform="rotate(143)"/>
+    <use href="#petal-b" transform="rotate(178)"/>
+    <use href="#petal-a" transform="rotate(213)"/>
+    <use href="#petal-b" transform="rotate(249)"/>
+    <use href="#petal-a" transform="rotate(286)"/>
+    <use href="#petal-b" transform="rotate(322)"/>
+    <circle cx="0" cy="0" r="32" fill="url(#centerGrad)"/>
+  </g>
+</svg>

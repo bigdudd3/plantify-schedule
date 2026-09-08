@@ -1,0 +1,27 @@
+<div id="plantify-schedule-embed">
+  <iframe
+    src="https://bigdudd3.github.io/plantify-schedule/"
+    title="Grow With Us Sunday schedule"
+    loading="lazy"
+    scrolling="no"
+    style="display:block;width:100%;border:0;height:2600px"></iframe>
+</div>
+<script>
+(function(){
+  var frame = document.getElementById('plantify-schedule-embed').querySelector('iframe');
+  var timer;
+  addEventListener('message', function(e){
+    if (e.source !== frame.contentWindow) return;
+    var h = e.data && e.data.plantifyEmbedHeight;
+    if (h) frame.style.height = h + 'px';
+  });
+  function ping(){
+    clearTimeout(timer);
+    timer = setTimeout(function(){
+      if (frame.contentWindow) frame.contentWindow.postMessage('plantifyEmbedPing', '*');
+    }, 150);
+  }
+  addEventListener('resize', ping);
+  addEventListener('orientationchange', ping);
+})();
+</script>

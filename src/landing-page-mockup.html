@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta name="robots" content="noindex, nofollow">
-<meta charset="utf-8">
+<html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sundays at Paradise Community Garden | Plantify</title>
 <style>
@@ -380,43 +378,6 @@
   document.addEventListener('keydown',function(e){if(!lb.classList.contains('on')) return; if(e.key==='Escape') close(); else if(e.key==='ArrowRight') show(i+1); else if(e.key==='ArrowLeft') show(i-1);});
   var sx=null; lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
   lb.addEventListener('touchend',function(e){if(sx===null) return; var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>50) show(dx<0?i+1:i-1); sx=null;});
-})();
-
-(function(){
-  if (window.parent === window) return;
-  var last = 0, timer = null;
-  function measure(){
-    // Measure the BODY only. documentElement.scrollHeight inflates to the
-    // viewport height, which feeds back through the parent's iframe height.
-    var b = document.body;
-    if (!b) return 0;
-    var cs = getComputedStyle(b);
-    return Math.ceil(b.getBoundingClientRect().height +
-                     parseFloat(cs.marginTop) + parseFloat(cs.marginBottom));
-  }
-  function post(){
-    var h = measure();
-    if (h && Math.abs(h - last) > 1){ last = h; parent.postMessage({plantifyEmbedHeight: h}, '*'); }
-  }
-  function soon(){ clearTimeout(timer); timer = setTimeout(post, 120); }
-  addEventListener('load', post);
-  addEventListener('resize', soon);
-  if (window.ResizeObserver){
-    var ro = new ResizeObserver(soon);
-    ro.observe(document.documentElement);
-    if (document.body) ro.observe(document.body);
-  }
-  addEventListener('message', function(e){
-    if (e.data !== 'plantifyEmbedPing') return;
-    last = 0; post();
-    requestAnimationFrame(function(){ last = 0; post(); });
-    [120, 400].forEach(function(t){ setTimeout(function(){ last = 0; post(); }, t); });
-  });
-  document.addEventListener('toggle', function(){ setTimeout(post, 280); }, true);
-  addEventListener('load', function(){
-    document.querySelectorAll('img').forEach(function(i){ i.addEventListener('load', soon); });
-  });
-  [60, 400, 1200, 2500].forEach(function(t){ setTimeout(post, t); });
 })();
 </script>
 

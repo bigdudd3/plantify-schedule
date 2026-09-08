@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+  @page { size: 1428px 2000px; margin: 0; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1428px; height:2000px; }
+  body {
+    background:#CBD6AB;
+    font-family:'Poppins','Nunito Sans',sans-serif;
+    position:relative; overflow:hidden;
+  }
+
+  /* ---------- background shapes ---------- */
+  .cream-top{
+    position:absolute; left:-120px; top:-260px; width:1120px; height:640px;
+    background:#FFFACD; border-radius:0 0 60% 55% / 0 0 48% 46%;
+  }
+  .cream-bottom{
+    position:absolute; left:-80px; bottom:-30px; width:1600px; height:410px;
+    background:#FFFAEA; border-radius:50% 44% 0 0 / 100% 100% 0 0;
+  }
+
+  /* ---------- decorative art ---------- */
+  .bunting{ position:absolute; right:0; top:0; width:773px; }
+  .flowers{ position:absolute; left:0; top:318px; width:372px; }
+  .butterflies{ position:absolute; left:1214px; top:468px; width:143px; z-index:6; }
+  .band{ position:absolute; right:-14px; bottom:44px; width:880px; z-index:1; }
+
+  /* ---------- header ---------- */
+  .hook{
+    position:absolute; left:56px; top:64px; width:400px;
+    font-size:44px; font-weight:700; line-height:1.16; color:#2C2C24;
+  }
+  .logo{ position:absolute; left:855px; top:58px; width:475px; }
+  .addr{
+    position:absolute; left:855px; top:190px; width:475px;
+    background:#EBE1F6; border-radius:16px; padding:14px 18px 18px; text-align:center;
+    box-shadow:0 3px 0 rgba(0,0,0,.10);
+  }
+  .addr b{ display:block; font-size:22px; letter-spacing:.5px; color:#2C2C24; line-height:1.3; }
+  .addr span{ font-size:18px; color:#3B3B31; text-decoration:underline; line-height:1.5; }
+
+  /* ---------- title ---------- */
+  .titlepill{
+    position:absolute; left:392px; top:306px; width:1000px; height:180px;
+    background:#DBF1DE; border:2.5px solid #1E1E17; border-radius:26px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .titlepill .l1{ font-family:'DM Serif Display',serif; font-style:italic; font-size:58px; color:#1E1E17; line-height:1.05; }
+  .titlepill .l2{ font-family:'DM Serif Display',serif; font-style:italic; font-size:64px; color:#1E1E17; line-height:1.15; }
+
+  /* ---------- schedule card ---------- */
+  .card{
+    position:absolute; left:392px; top:512px; width:1000px;
+    background:#CFF0A0; border:2.5px solid #1E1E17; border-radius:26px;
+    padding:24px 34px 20px; z-index:4;
+  }
+  .card h2{ font-size:26px; font-weight:800; letter-spacing:.6px; color:#1E1E17; text-align:center; }
+  .card .hours{ font-size:23px; font-weight:700; font-style:italic; color:#33421F; text-align:center; margin-top:3px; }
+  .rule{ height:2px; background:#1E1E17; opacity:.2; margin:14px 0 10px; }
+
+  .row{ display:flex; align-items:flex-start; gap:16px; padding:10px 0; }
+  .row + .row{ border-top:1.5px dashed rgba(30,30,23,.22); }
+  .date{ width:148px; flex:none; font-size:23px; font-weight:800; color:#1E1E17; padding-top:15px; }
+  .body{ flex:1; }
+  .tag{
+    display:inline-block; font-size:13px; font-weight:800; letter-spacing:1.4px;
+    text-transform:uppercase; padding:3px 11px; border-radius:20px; margin-bottom:3px;
+  }
+  .t-work{ background:#8FBF5A; color:#1B2A0C; }
+  .t-theme{ background:#F2C14E; color:#3A2A00; }
+  .t-event{ background:#E4632F; color:#FFF6E8; }
+  .what{ font-size:24px; font-weight:700; color:#1E1E17; line-height:1.2; }
+  .sub{ font-size:18px; color:#3D4A2C; line-height:1.28; margin-top:2px; }
+
+  .row.feature{
+    background:#FFFAEA; border:2.5px solid #E4632F; border-radius:18px;
+    padding:13px 18px; margin:5px 0;
+  }
+  .row.feature .date{ padding-top:17px; }
+  .fine{ font-size:16px; font-style:italic; color:#3D4A2C; text-align:center; margin-top:12px; }
+
+  /* ---------- good to know ---------- */
+  .know{
+    position:absolute; left:392px; top:1348px; width:1000px;
+    background:#FFFAEA; border:2.5px solid #1E1E17; border-radius:22px; padding:16px 26px 14px;
+    z-index:4;
+  }
+  .know h3{ font-size:18px; font-weight:800; letter-spacing:1.6px; text-transform:uppercase; color:#4A5A35; margin-bottom:8px; }
+  .know ul{ list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:6px 26px; }
+  .know li{ font-size:19px; color:#1E1E17; line-height:1.24; padding-left:24px; position:relative; }
+  .know li:before{ content:"·"; position:absolute; left:6px; top:-6px; font-size:30px; color:#8FBF5A; font-weight:900; }
+  .know li b{ font-weight:700; }
+
+  /* ---------- CTA / QR ---------- */
+  .cta{
+    position:absolute; left:52px; top:1476px; width:300px;
+    font-size:28px; font-weight:800; line-height:1.12; color:#33421F; z-index:5;
+  }
+  .qrbox{
+    position:absolute; left:52px; top:1568px; width:300px;
+    background:#3A5E1E; border-radius:20px; padding:13px 13px 15px; text-align:center; z-index:5;
+  }
+  .qrbox .u{ font-size:16px; font-weight:700; color:#FFFAEA; margin-bottom:8px; }
+  .qrbox img{ width:274px; display:block; border-radius:8px; }
+
+  /* ---------- footer ---------- */
+  .footer{
+    position:absolute; left:392px; top:1888px; width:1000px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    background:#3A5E1E; border-radius:18px; padding:14px 26px; z-index:8;
+  }
+  .footer .q{ font-size:19px; font-weight:600; color:#FFFAEA; line-height:1.3; }
+  .footer .q b{ font-weight:800; }
+  .footer .arc{ font-size:17px; color:#DCE9C6; text-align:right; line-height:1.3; }
+</style></head>
+<body>
+  <div class="cream-top"></div>
+  <div class="cream-bottom"></div>
+
+  <img class="bunting" src="_assets/bunting.png">
+  <img class="flowers" src="_assets/flowers.png">
+
+  <div class="hook">Bring friends &amp;<br>family out to<br>join us!</div>
+  <img class="logo" src="_assets/logo_card.png">
+  <div class="addr"><b>PARADISE COMMUNITY GARDEN</b><span>20097 Mission Blvd, Hayward, CA 94541</span></div>
+
+  <div class="titlepill">
+    <div class="l1">Grow With Us</div>
+    <div class="l2">September Schedule</div>
+  </div>
+  <img class="butterflies" src="_assets/butterflies.png">
+
+  <div class="card">
+    <h2>SUNDAY GARDEN PARTY &amp; GARDEN HOURS</h2>
+    <div class="hours">Every Sunday, 11 AM &ndash; 2 PM</div>
+    <div class="rule"></div>
+
+    <div class="row">
+      <div class="date">Sept 6</div>
+      <div class="body">
+        <span class="tag t-work">Workday</span>
+        <div class="what">Seed collection for next season</div>
+        <div class="sub">Save seed from this year&rsquo;s beds so we can plant it again in spring.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="date">Sept 13</div>
+      <div class="body">
+        <span class="tag t-work">Workday</span>
+        <div class="what">Help prep compost bags</div>
+        <div class="sub">Bag finished compost for the fall beds. Gloves and tools provided.</div>
+      </div>
+    </div>
+
+    <div class="row feature">
+      <div class="date">Sept 20</div>
+      <div class="body">
+        <span class="tag t-event">Community Event</span>
+        <div class="what">Fall Crop Harvest</div>
+        <div class="sub">Pick what we grew together and take some home. Everyone welcome, no sign-up needed.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="date">Sept 27</div>
+      <div class="body">
+        <span class="tag t-theme">Themed Sunday</span>
+        <div class="what">Community Connect: Games in the Garden</div>
+        <div class="sub">Board games, snacks, and a slow afternoon. Bring a friend.</div>
+      </div>
+    </div>
+
+    <div class="fine">*Weather permitting. Schedule changes are posted at Plantify.org/grow-with-us.</div>
+  </div>
+
+  <div class="know">
+    <h3>Good to know</h3>
+    <ul>
+      <li><b>Free</b> and open to everyone</li>
+      <li><b>Drop in</b> any Sunday, no RSVP</li>
+      <li><b>All ages.</b> Kids welcome with an adult</li>
+      <li><b>No experience needed.</b> We&rsquo;ll show you</li>
+      <li>Tools, gloves, and water provided</li>
+      <li>Wear closed shoes and clothes you can dirty</li>
+    </ul>
+  </div>
+
+  <div class="cta">See each week &amp; sign up</div>
+  <div class="qrbox">
+    <div class="u">Plantify.org/grow-with-us</div>
+    <img src="_assets/qr.png">
+  </div>
+
+  <img class="band" src="_assets/bottom_band.png">
+
+  <div class="footer">
+    <div class="q">Questions? Email <b>community@plantify.org</b></div>
+    <div class="arc">Part of the Grow With Us Fall Series<br>Season closes with the Harvest Potluck in October</div>
+  </div>
+</body></html>
